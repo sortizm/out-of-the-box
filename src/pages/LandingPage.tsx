@@ -39,11 +39,13 @@ export function LandingPage() {
           <div className="red-dot" aria-hidden="true" />
         </div>
 
-        <Link to="/activities" className="activities-btn">
-          Activities
-        </Link>
-
         <h1 className="title">Out of the box</h1>
+
+        <div className="activities-btn-wrapper">
+          <Link to="/activities" className="activities-btn">
+            Activities
+          </Link>
+        </div>
 
         {!user && <SignInButton />}
       </main>
