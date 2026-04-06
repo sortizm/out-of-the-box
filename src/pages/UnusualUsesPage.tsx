@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, Navigate } from 'react-router-dom'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { UserMenu } from '../components/UserMenu'
 import { useAuth } from '../context/AuthContext'
+import { db } from '../firebase'
 
 const DURATION_SECONDS = 300
 
@@ -49,6 +51,17 @@ export function UnusualUsesPage() {
   const [finished, setFinished] = useState(false)
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    if (!finished || !user) return
+    addDoc(collection(db, 'activities'), {
+      userId: user.uid,
+      type: 'unusual_uses',
+      score: uses.length,
+      timestamp: serverTimestamp(),
+      word: object,
+    })
+  }, [finished])
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
