@@ -41,13 +41,15 @@ export function LandingPage() {
 
         <h1 className="title">Out of the box</h1>
 
-        <div className="activities-btn-wrapper">
-          <Link to="/activities" className="activities-btn">
-            Activities
-          </Link>
-        </div>
-
-        {!user && <SignInButton />}
+        {user ? (
+          <div className="activities-btn-wrapper">
+            <Link to="/activities" className="activities-btn">
+              Activities
+            </Link>
+          </div>
+        ) : (
+          <SignInButton />
+        )}
       </main>
     </>
   )

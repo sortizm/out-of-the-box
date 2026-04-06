@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { UserMenu } from '../components/UserMenu'
 import { useAuth } from '../context/AuthContext'
 
@@ -38,7 +38,7 @@ function formatTime(seconds: number): string {
 }
 
 export function UnusualUsesPage() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
 
   const [object] = useState<string>(
     () => OBJECTS[Math.floor(Math.random() * OBJECTS.length)]
@@ -73,6 +73,10 @@ export function UnusualUsesPage() {
     if (!trimmed || finished) return
     setUses(prev => [...prev, trimmed])
     setInputValue('')
+  }
+
+  if (!loading && !user) {
+    return <Navigate to="/activities" replace />
   }
 
   return (
