@@ -1,13 +1,30 @@
 import { Link } from 'react-router-dom'
 import { UserMenu } from '../components/UserMenu'
+import { SignInButton } from '../components/SignInButton'
 import { useAuth } from '../context/AuthContext'
 
 export function ActivitiesPage() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return (
+      <main className="page-container">
+        <div className="spinner" aria-label="Loading" />
+      </main>
+    )
+  }
+
+  if (!user) {
+    return (
+      <main className="page-container">
+        <SignInButton />
+      </main>
+    )
+  }
 
   return (
     <>
-      {user && <UserMenu />}
+      <UserMenu />
       <main className="page-container">
         <nav className="page-nav">
           <Link to="/" className="back-link">← Home</Link>
