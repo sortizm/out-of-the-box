@@ -67,10 +67,22 @@ export function UnusualUsesPage() {
     }
   }, [])
 
+  const trimmedInput = inputValue.trim().toLowerCase()
+  const hasExactMatch = trimmedInput.length > 0 &&
+    uses.some(u => u.toLowerCase() === trimmedInput)
+
+  function getMatchType(use: string): 'exact' | 'partial' | 'none' {
+    if (!trimmedInput) return 'none'
+    const u = use.toLowerCase()
+    if (u === trimmedInput) return 'exact'
+    if (u.includes(trimmedInput) || trimmedInput.includes(u)) return 'partial'
+    return 'none'
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const trimmed = inputValue.trim()
-    if (!trimmed || finished) return
+    if (!trimmed || finished || hasExactMatch) return
     setUses(prev => [...prev, trimmed])
     setInputValue('')
   }
@@ -116,7 +128,7 @@ export function UnusualUsesPage() {
               <button
                 className="unusual-uses__submit"
                 type="submit"
-                disabled={!inputValue.trim()}
+                disabled={!inputValue.trim() || hasExactMatch}
               >
                 Submit
               </button>
@@ -129,9 +141,15 @@ export function UnusualUsesPage() {
 
           {uses.length > 0 && (
             <ul className="unusual-uses__list">
-              {uses.map((use, i) => (
-                <li key={i} className="unusual-uses__list-item">{use}</li>
-              ))}
+              {uses.map((use, i) => {
+                const match = getMatchType(use)
+                const cls = match === 'exact'
+                  ? 'unusual-uses__list-item unusual-uses__list-item--exact'
+                  : match === 'partial'
+                  ? 'unusual-uses__list-item unusual-uses__list-item--partial'
+                  : 'unusual-uses__list-item'
+                return <li key={i} className={cls}>{use}</li>
+              })}
             </ul>
           )}
         </div>
