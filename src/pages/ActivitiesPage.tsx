@@ -39,6 +39,22 @@ export function ActivitiesPage() {
               </span>
             </Link>
           </li>
+          <li>
+            <Link to="/activities/similarities" className="activity-card">
+              <span className="activity-card__name">Similarities</span>
+              <span className="activity-card__desc">
+                How many similarities can you find between two random objects? You have 5 minutes.
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/activities/differences" className="activity-card">
+              <span className="activity-card__name">Differences</span>
+              <span className="activity-card__desc">
+                How many differences can you find between two random objects? You have 5 minutes.
+              </span>
+            </Link>
+          </li>
         </ul>
       </main>
     </>

@@ -8,14 +8,18 @@ import { OBJECTS, formatTime } from './utils'
 
 const DURATION_SECONDS = 300
 
-export function UnusualUsesPage() {
+export function SimilaritiesPage() {
   const { user, loading } = useAuth()
 
-  const [object] = useState<string>(
-    () => OBJECTS[Math.floor(Math.random() * OBJECTS.length)]
-  )
+  const [[object1, object2]] = useState<[string, string]>(() => {
+    const i = Math.floor(Math.random() * OBJECTS.length)
+    let j = Math.floor(Math.random() * (OBJECTS.length - 1))
+    if (j >= i) j++
+    return [OBJECTS[i], OBJECTS[j]]
+  })
+
   const [inputValue, setInputValue] = useState('')
-  const [uses, setUses] = useState<string[]>([])
+  const [answers, setAnswers] = useState<string[]>([])
   const [timeLeft, setTimeLeft] = useState(DURATION_SECONDS)
   const [finished, setFinished] = useState(false)
 
@@ -25,10 +29,11 @@ export function UnusualUsesPage() {
     if (!finished || !user) return
     addDoc(collection(db, 'activities'), {
       userId: user.uid,
-      type: 'unusual_uses',
-      score: uses.length,
+      type: 'similarities',
+      score: answers.length,
       timestamp: serverTimestamp(),
-      word: object,
+      object1,
+      object2,
     })
   }, [finished])
 
@@ -51,13 +56,13 @@ export function UnusualUsesPage() {
 
   const trimmedInput = inputValue.trim().toLowerCase()
   const hasExactMatch = trimmedInput.length > 0 &&
-    uses.some(u => u.toLowerCase() === trimmedInput)
+    answers.some(a => a.toLowerCase() === trimmedInput)
 
-  function getMatchType(use: string): 'exact' | 'partial' | 'none' {
+  function getMatchType(answer: string): 'exact' | 'partial' | 'none' {
     if (!trimmedInput) return 'none'
-    const u = use.toLowerCase()
-    if (u === trimmedInput) return 'exact'
-    if (u.includes(trimmedInput) || trimmedInput.includes(u)) return 'partial'
+    const a = answer.toLowerCase()
+    if (a === trimmedInput) return 'exact'
+    if (a.includes(trimmedInput) || trimmedInput.includes(a)) return 'partial'
     return 'none'
   }
 
@@ -65,7 +70,7 @@ export function UnusualUsesPage() {
     e.preventDefault()
     const trimmed = inputValue.trim()
     if (!trimmed || finished || hasExactMatch) return
-    setUses(prev => [...prev, trimmed])
+    setAnswers(prev => [...prev, trimmed])
     setInputValue('')
   }
 
@@ -81,34 +86,37 @@ export function UnusualUsesPage() {
           <Link to="/activities" className="back-link">← Activities</Link>
         </nav>
 
-        <div className="unusual-uses">
-          <div className="unusual-uses__header">
+        <div className="similarities">
+          <div className="similarities__header">
             <h1 className="page-title">
-              What are the unusual uses of{' '}
-              <span className="unusual-uses__object">{object}</span>?
+              How are{' '}
+              <span className="similarities__object">{object1}</span>
+              {' '}and{' '}
+              <span className="similarities__object">{object2}</span>
+              {' '}similar?
             </h1>
 
-            <div className="unusual-uses__meta">
-              <span className="unusual-uses__count">{uses.length} uses found</span>
-              <span className={`unusual-uses__timer${timeLeft <= 30 ? ' unusual-uses__timer--urgent' : ''}`}>
+            <div className="similarities__meta">
+              <span className="similarities__count">{answers.length} similarit{answers.length !== 1 ? 'ies' : 'y'} found</span>
+              <span className={`similarities__timer${timeLeft <= 30 ? ' similarities__timer--urgent' : ''}`}>
                 {formatTime(timeLeft)}
               </span>
             </div>
           </div>
 
           {!finished ? (
-            <form className="unusual-uses__form" onSubmit={handleSubmit}>
+            <form className="similarities__form" onSubmit={handleSubmit}>
               <input
-                className="unusual-uses__input"
+                className="similarities__input"
                 type="text"
                 value={inputValue}
                 onChange={e => setInputValue(e.target.value)}
-                placeholder="Enter an unusual use…"
+                placeholder="Enter a similarity…"
                 autoFocus
                 autoComplete="off"
               />
               <button
-                className="unusual-uses__submit"
+                className="similarities__submit"
                 type="submit"
                 disabled={!inputValue.trim() || hasExactMatch}
               >
@@ -116,21 +124,21 @@ export function UnusualUsesPage() {
               </button>
             </form>
           ) : (
-            <div className="unusual-uses__result">
-              You found <strong>{uses.length}</strong> unusual use{uses.length !== 1 ? 's' : ''}!
+            <div className="similarities__result">
+              You found <strong>{answers.length}</strong> similarit{answers.length !== 1 ? 'ies' : 'y'}!
             </div>
           )}
 
-          {uses.length > 0 && (
-            <ul className="unusual-uses__list">
-              {uses.map((use, i) => {
-                const match = getMatchType(use)
+          {answers.length > 0 && (
+            <ul className="similarities__list">
+              {answers.map((answer, i) => {
+                const match = getMatchType(answer)
                 const cls = match === 'exact'
-                  ? 'unusual-uses__list-item unusual-uses__list-item--exact'
+                  ? 'similarities__list-item similarities__list-item--exact'
                   : match === 'partial'
-                  ? 'unusual-uses__list-item unusual-uses__list-item--partial'
-                  : 'unusual-uses__list-item'
-                return <li key={i} className={cls}>{use}</li>
+                  ? 'similarities__list-item similarities__list-item--partial'
+                  : 'similarities__list-item'
+                return <li key={i} className={cls}>{answer}</li>
               })}
             </ul>
           )}
