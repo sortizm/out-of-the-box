@@ -364,6 +364,19 @@ body {
   border-radius: 0 4px 4px 0;
   font-size: 0.95rem;
   color: #e0e0f0;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.unusual-uses__list-item--partial {
+  border: 1.5px solid #fef08a;
+  border-left: 3px solid #b8860b;
+  color: #b8860b;
+}
+
+.unusual-uses__list-item--exact {
+  border: 1.5px solid #e63946;
+  border-left: 3px solid #e63946;
+  color: #e63946;
 }
 
 /* ── Loading spinner ──────────────────────────── */
