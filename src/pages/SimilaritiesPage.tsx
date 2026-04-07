@@ -4,7 +4,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { UserMenu } from '../components/UserMenu'
 import { useAuth } from '../context/AuthContext'
 import { db } from '../firebase'
-import { OBJECTS, formatTime } from './utils'
+import { OBJECTS, formatTime, getMatchType } from './utils'
 
 const DURATION_SECONDS = 300
 
@@ -57,14 +57,6 @@ export function SimilaritiesPage() {
   const trimmedInput = inputValue.trim().toLowerCase()
   const hasExactMatch = trimmedInput.length > 0 &&
     answers.some(a => a.toLowerCase() === trimmedInput)
-
-  function getMatchType(answer: string): 'exact' | 'partial' | 'none' {
-    if (!trimmedInput) return 'none'
-    const a = answer.toLowerCase()
-    if (a === trimmedInput) return 'exact'
-    if (a.includes(trimmedInput) || trimmedInput.includes(a)) return 'partial'
-    return 'none'
-  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -132,7 +124,8 @@ export function SimilaritiesPage() {
           {answers.length > 0 && (
             <ul className="similarities__list">
               {answers.map((answer, i) => {
-                const match = getMatchType(answer)
+                const match = getMatchType(answer, trimmedInput)
+                if (trimmedInput && match === 'none') return null
                 const cls = match === 'exact'
                   ? 'similarities__list-item similarities__list-item--exact'
                   : match === 'partial'

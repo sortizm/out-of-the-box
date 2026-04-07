@@ -4,7 +4,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { UserMenu } from '../components/UserMenu'
 import { useAuth } from '../context/AuthContext'
 import { db } from '../firebase'
-import { OBJECTS, formatTime } from './utils'
+import { OBJECTS, formatTime, getMatchType } from './utils'
 
 const DURATION_SECONDS = 300
 
@@ -52,14 +52,6 @@ export function UnusualUsesPage() {
   const trimmedInput = inputValue.trim().toLowerCase()
   const hasExactMatch = trimmedInput.length > 0 &&
     uses.some(u => u.toLowerCase() === trimmedInput)
-
-  function getMatchType(use: string): 'exact' | 'partial' | 'none' {
-    if (!trimmedInput) return 'none'
-    const u = use.toLowerCase()
-    if (u === trimmedInput) return 'exact'
-    if (u.includes(trimmedInput) || trimmedInput.includes(u)) return 'partial'
-    return 'none'
-  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -124,7 +116,8 @@ export function UnusualUsesPage() {
           {uses.length > 0 && (
             <ul className="unusual-uses__list">
               {uses.map((use, i) => {
-                const match = getMatchType(use)
+                const match = getMatchType(use, trimmedInput)
+                if (trimmedInput && match === 'none') return null
                 const cls = match === 'exact'
                   ? 'unusual-uses__list-item unusual-uses__list-item--exact'
                   : match === 'partial'
