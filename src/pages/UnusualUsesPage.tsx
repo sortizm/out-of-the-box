@@ -25,6 +25,8 @@ export function UnusualUsesPage() {
     if (!finished || !user) return
     addDoc(collection(db, 'activities'), {
       userId: user.uid,
+      displayName: user.displayName ?? '',
+      photoURL: user.photoURL ?? '',
       type: 'unusual_uses',
       score: uses.length,
       timestamp: serverTimestamp(),
