@@ -55,6 +55,12 @@ export function ActivitiesPage() {
               </span>
             </Link>
           </li>
+          <li>
+            <Link to="/leaderboard" className="activity-card">
+              <span className="activity-card__name">Weekly Leaderboard</span>
+              <span className="activity-card__desc">See who scored the most this week.</span>
+            </Link>
+          </li>
         </ul>
       </main>
     </>

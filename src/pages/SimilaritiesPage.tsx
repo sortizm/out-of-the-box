@@ -29,6 +29,8 @@ export function SimilaritiesPage() {
     if (!finished || !user) return
     addDoc(collection(db, 'activities'), {
       userId: user.uid,
+      displayName: user.displayName ?? '',
+      photoURL: user.photoURL ?? '',
       type: 'similarities',
       score: answers.length,
       timestamp: serverTimestamp(),

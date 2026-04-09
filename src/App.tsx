@@ -5,6 +5,7 @@ import { ActivitiesPage } from './pages/ActivitiesPage'
 import { UnusualUsesPage } from './pages/UnusualUsesPage'
 import { SimilaritiesPage } from './pages/SimilaritiesPage'
 import { DifferencesPage } from './pages/DifferencesPage'
+import { LeaderboardPage } from './pages/LeaderboardPage'
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/activities/unusual-uses" element={<UnusualUsesPage />} />
           <Route path="/activities/similarities" element={<SimilaritiesPage />} />
           <Route path="/activities/differences" element={<DifferencesPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
