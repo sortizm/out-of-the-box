@@ -46,6 +46,9 @@ export function LandingPage() {
             <Link to="/activities" className="activities-btn">
               Activities
             </Link>
+            <Link to="/leaderboard" className="activities-btn">
+              Weekly Leaderboard
+            </Link>
           </div>
         ) : (
           <SignInButton />
