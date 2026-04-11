@@ -52,6 +52,9 @@ export function LandingPage() {
             <Link to="/analytics" className="activities-btn">
               Analytics
             </Link>
+            <Link to="/multiplayer" className="activities-btn activities-btn--multiplayer">
+              Multiplayer
+            </Link>
           </div>
         ) : (
           <SignInButton />
