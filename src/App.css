@@ -725,3 +725,24 @@ body {
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
+
+/* ── Analytics page ───────────────────────────── */
+
+.analytics-section {
+  margin-bottom: 2.5rem;
+}
+
+.analytics-section__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.analytics-empty {
+  color: #4a4a6a;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
