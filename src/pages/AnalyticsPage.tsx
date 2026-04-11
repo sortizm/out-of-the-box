@@ -200,7 +200,7 @@ export function AnalyticsPage() {
                         }}
                         labelStyle={{ color: '#9ca3af' }}
                         cursor={{ stroke: '#4a4a6a' }}
-                        formatter={(value: number) => [value, 'Score']}
+                        formatter={(value) => [value ?? '', 'Score']}
                       />
                       <Line
                         type="monotone"
