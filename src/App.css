@@ -711,6 +711,357 @@ body {
   margin: 1rem 0;
 }
 
+/* ── Multiplayer button variant ───────────────── */
+
+.activities-btn--multiplayer {
+  border-color: #e63946;
+  color: #e63946;
+}
+
+.activities-btn--multiplayer:hover {
+  border-color: #e63946;
+  background: rgba(230, 57, 70, 0.08);
+  color: #e63946;
+}
+
+/* ── Multiplayer setup page ───────────────────── */
+
+.mp-setup__host {
+  margin-bottom: 2rem;
+}
+
+.mp-setup__join {
+  margin-top: 2rem;
+}
+
+.mp-setup__section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e0e0f0;
+  margin-bottom: 1rem;
+}
+
+.mp-setup__id-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.mp-setup__id {
+  flex: 1;
+  padding: 10px 14px;
+  background: #1a1a2e;
+  border: 1.5px solid #4a4a6a;
+  border-radius: 6px;
+  color: #e0e0f0;
+  font-family: monospace;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.mp-setup__copy-btn {
+  padding: 10px 18px;
+  background: #e0e0f0;
+  color: #0d0d1a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.mp-setup__copy-btn:hover {
+  opacity: 0.88;
+}
+
+.mp-setup__hint {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 1.5rem;
+}
+
+.mp-setup__start-btn {
+  width: 100%;
+  padding: 12px 22px;
+  background: #e0e0f0;
+  color: #0d0d1a;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.mp-setup__start-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.mp-setup__start-btn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.mp-setup__divider {
+  border: none;
+  border-top: 1px dashed #4a4a6a;
+  margin: 2rem 0;
+}
+
+.mp-setup__join-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.mp-setup__join-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: #1a1a2e;
+  border: 1.5px solid #4a4a6a;
+  border-radius: 6px;
+  color: #e0e0f0;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.mp-setup__join-input::placeholder {
+  color: #4a4a6a;
+}
+
+.mp-setup__join-input:focus {
+  border-color: #e0e0f0;
+}
+
+.mp-setup__ready-btn {
+  padding: 10px 22px;
+  background: #e0e0f0;
+  color: #0d0d1a;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.mp-setup__ready-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.mp-setup__ready-btn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.mp-setup__error {
+  color: #e63946;
+  font-size: 0.875rem;
+}
+
+/* ── Multiplayer session — waiting ────────────── */
+
+.mp-session__waiting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 4rem 0;
+}
+
+.mp-session__waiting-text {
+  color: #9ca3af;
+  font-size: 1rem;
+}
+
+/* ── Multiplayer scoreboard (live) ────────────── */
+
+.mp-scoreboard-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+}
+
+.mp-scoreboard {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.mp-scoreboard__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: #1a1a2e;
+  border: 1px solid #4a4a6a;
+  border-radius: 6px;
+}
+
+.mp-scoreboard__row--me {
+  border-color: #e0e0f0;
+}
+
+.mp-scoreboard__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #4a4a6a;
+  flex-shrink: 0;
+  background: #4a4a6a;
+  color: #e0e0f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mp-scoreboard__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mp-scoreboard__name {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #e0e0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mp-scoreboard__score {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e0e0f0;
+}
+
+/* ── Multiplayer results ──────────────────────── */
+
+.mp-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.mp-results__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #e0e0f0;
+  margin-bottom: 0.25rem;
+}
+
+.mp-results__player {
+  background: #1a1a2e;
+  border: 1px solid #4a4a6a;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.mp-results__player--me {
+  border-color: #e0e0f0;
+}
+
+.mp-results__player-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.mp-results__rank {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #9ca3af;
+  min-width: 2rem;
+}
+
+.mp-results__rank--1 { color: #FFD700; }
+.mp-results__rank--2 { color: #C0C0C0; }
+.mp-results__rank--3 { color: #CD7F32; }
+
+.mp-results__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #4a4a6a;
+  flex-shrink: 0;
+  background: #4a4a6a;
+  color: #e0e0f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mp-results__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mp-results__name {
+  flex: 1;
+  font-weight: 600;
+  color: #e0e0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mp-results__score {
+  font-weight: 700;
+  color: #e0e0f0;
+}
+
+.mp-results__answers {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mp-results__answers li {
+  padding: 0.4rem 0.75rem;
+  background: #0d0d1a;
+  border-left: 3px solid #4a4a6a;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.875rem;
+  color: #e0e0f0;
+}
+
+.mp-results__no-answers {
+  font-size: 0.875rem;
+  color: #4a4a6a;
+  font-style: italic;
+}
+
+.mp-results__play-again {
+  margin-top: 1rem;
+  align-self: center;
+}
+
 /* ── Loading spinner ──────────────────────────── */
 
 @keyframes spin {
