@@ -24,9 +24,11 @@ export function DifferencesPage() {
   const [finished, setFinished] = useState(false)
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const savedRef = useRef(false)
 
   useEffect(() => {
-    if (!finished || !user) return
+    if (!finished || !user || savedRef.current) return
+    savedRef.current = true
     addDoc(collection(db, 'activities'), {
       userId: user.uid,
       displayName: user.displayName ?? '',
@@ -37,7 +39,7 @@ export function DifferencesPage() {
       object1,
       object2,
     })
-  }, [finished])
+  }, [finished, user])
 
   useEffect(() => {
     timerRef.current = setInterval(() => {

@@ -9,7 +9,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts'
-import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 import { UserMenu } from '../components/UserMenu'
 import { SignInButton } from '../components/SignInButton'
 import { useAuth } from '../context/AuthContext'
@@ -107,11 +107,13 @@ export function AnalyticsPage() {
     const since = new Date()
     since.setDate(since.getDate() - 29)
     since.setHours(0, 0, 0, 0)
+    const sinceTime = since.getTime()
 
+    // Query by userId only (avoids a composite index requirement).
+    // Date filtering is done client-side below.
     const q = query(
       collection(db, 'activities'),
       where('userId', '==', user.uid),
-      where('timestamp', '>=', Timestamp.fromDate(since)),
     )
 
     getDocs(q)
@@ -121,6 +123,7 @@ export function AnalyticsPage() {
           const d = doc.data()
           if (!d.timestamp || !d.type) return
           const date: Date = d.timestamp.toDate()
+          if (date.getTime() < sinceTime) return
           raw.push({
             type: d.type,
             score: Number(d.score ?? 0),
