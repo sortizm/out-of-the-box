@@ -20,9 +20,11 @@ export function UnusualUsesPage() {
   const [finished, setFinished] = useState(false)
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const savedRef = useRef(false)
 
   useEffect(() => {
-    if (!finished || !user) return
+    if (!finished || !user || savedRef.current) return
+    savedRef.current = true
     addDoc(collection(db, 'activities'), {
       userId: user.uid,
       displayName: user.displayName ?? '',
@@ -32,7 +34,7 @@ export function UnusualUsesPage() {
       timestamp: serverTimestamp(),
       word: object,
     })
-  }, [finished])
+  }, [finished, user])
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
